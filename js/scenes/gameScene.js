@@ -14,9 +14,6 @@ gameScene.init = function () {
     *   
     */
 
-    // car body array for updates
-    this.carA = [];
-
 };
 
 // executed once, after assets were loaded
@@ -41,18 +38,30 @@ gameScene.create = function () {
     let rcf = this.add.sprite(150, 0, 'cote').setOrigin(0, 0);
     let rc = this.add.sprite(200, 0, 'coin').setOrigin(0, 0);
     rc.flipX = true;
+    
+    //
+    let lc2 = this.add.sprite(0, 50, 'cote').setOrigin(0, 0);
+    //lc2.angle = 90;
+    let lcf2 = this.add.sprite(50, 50, 'cote').setOrigin(0, 0);
+    let cf2 = this.add.sprite(100, 50, 'cote').setOrigin(0, 0);
+    let rcf2 = this.add.sprite(150, 50, 'cote').setOrigin(0, 0);
+    let rc2 = this.add.sprite(200, 50, 'cote').setOrigin(0, 0);
+    //rc2.angle = 90;
 
-    let car = this.add.container(350, 350, [cockpit, lc , lcf,cf, rcf, rc]);
+    this.car = this.add.container(350, 350, [cockpit, lc, lcf, cf, rcf, rc, lc2, lcf2, cf2, rcf2, rc2]);
 
-    for (let i=1; i<car.list.length;i++){
+    for (let i=1; i<this.car.list.length;i++){
         //car.list[i].setFrame(3);
     }
 
-
+    this.keys = this.input.keyboard.addKeys("P");
 
 };
-gameScene.formatter = function (box) {
-
+gameScene.update = function (box) {
+    if (this.keys.P.isDown) {
+        //console.log ('here');
+        this.car.y -= 5;
+    }
 }
 
 // animate out
