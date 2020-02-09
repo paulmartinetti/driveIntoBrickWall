@@ -52,28 +52,31 @@ loadingScene.preload = function () {
 
     this.load.image('wall','assets/wall.png');
 
-    // coin
-    this.load.spritesheet('coin','assets/coin.png', {
-        frameWidth: 50,
+    // eight car pieces
+    let carA = ['l','ff','lb','lf','r','rb','rf','bb'];
+    for (let i=0;i<carA.length;i++){
+        let t = carA[i];
+        this.load.spritesheet(t,'assets/'+t+'.png', {
+            frameWidth: 50,
+            frameHeight: 50,
+            startFrame: 0,
+            endFrame: 4,
+            margin: 1,
+            spacing: 1,
+        });
+    }
+    
+
+    // roues
+    this.load.spritesheet('lw','assets/lw.png', {
+        frameWidth: 75,
         frameHeight: 50,
         startFrame: 0,
-        endFrame: 4,
+        endFrame: 2,
         margin: 1,
         spacing: 1,
     });
-
-    // cote
-    this.load.spritesheet('cote','assets/cote.png', {
-        frameWidth: 50,
-        frameHeight: 50,
-        startFrame: 0,
-        endFrame: 4,
-        margin: 1,
-        spacing: 1,
-    });
-
-    // roue
-    this.load.spritesheet('roue','assets/roue.png', {
+    this.load.spritesheet('rw','assets/rw.png', {
         frameWidth: 75,
         frameHeight: 50,
         startFrame: 0,

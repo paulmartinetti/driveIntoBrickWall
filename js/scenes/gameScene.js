@@ -7,7 +7,12 @@ gameScene.init = function () {
     this.gameW = this.sys.game.config.width;
     this.gameH = this.sys.game.config.height;
 
-
+    this.carDA = [['lf','ff','ff','ff','rf'],
+                ['l','ff','ff','ff','r'],
+                ['l','ff','ff','ff','r'],
+                ['l','bb','bb','bb','r'],
+                ['l','bb','bb','bb','r'],
+                ['lb','bb','bb','bb','rb']];
 
     /**** design of sprites ****/
     /*
@@ -30,37 +35,60 @@ gameScene.create = function () {
         callbackScope: this
     }); */
 
-    let cockpit = this.add.sprite(50, 150, 'cockpit').setOrigin(0, 0);
-    // box.setFrame(this.hTensCur);
-    let lc = this.add.sprite(0, 0, 'coin').setOrigin(0, 0);
-    let lcf = this.add.sprite(50, 0, 'cote').setOrigin(0, 0);
-    let cf = this.add.sprite(100, 0, 'cote').setOrigin(0, 0);
-    let rcf = this.add.sprite(150, 0, 'cote').setOrigin(0, 0);
-    let rc = this.add.sprite(200, 0, 'coin').setOrigin(0, 0);
-    rc.flipX = true;
-    
-    //
-    let lc2 = this.add.sprite(0, 50, 'cote').setOrigin(0, 0);
-    //lc2.angle = 90;
-    let lcf2 = this.add.sprite(50, 50, 'cote').setOrigin(0, 0);
-    let cf2 = this.add.sprite(100, 50, 'cote').setOrigin(0, 0);
-    let rcf2 = this.add.sprite(150, 50, 'cote').setOrigin(0, 0);
-    let rc2 = this.add.sprite(200, 50, 'cote').setOrigin(0, 0);
-    //rc2.angle = 90;
+    // build car
+    let carA = [];
+    // depth 1
+    let flw = this.add.sprite(-25,50,'lw').setOrigin(0,0);
+    let frw = this.add.sprite(200,50,'rw').setOrigin(0,0);
+    let blw = this.add.sprite(-25,200,'lw').setOrigin(0,0);
+    let brw = this.add.sprite(200,200,'rw').setOrigin(0,0);
+    // --> animate wheels
+    carA.push(flw,frw,blw,brw);
 
-    this.car = this.add.container(350, 350, [cockpit, lc, lcf, cf, rcf, rc, lc2, lcf2, cf2, rcf2, rc2]);
+    // set up car parts in 5x6 grid
+    let step = 50;
+    for (let i=0;i<this.carDA.length;i++){
+        for (let j=0;j<this.carDA[i].length;j++){
+            let t = this.carDA[i][j];
+            let part = this.add.sprite(j*step,i*step,t).setOrigin(0,0).setInteractive().setDepth(5);
+            // --> add collision listener
+            carA.push(part);
+        }
+
+    }
+
+
+    let cockpit = this.add.sprite(50, 150, 'cockpit').setOrigin(0, 0);
+    let head = this.add.sprite(100, 200, 'head').setOrigin(0, 0);
+    // --> add head animation
+    carA.push(cockpit,head);
+    
+    // assemble car
+    this.car = this.add.container(350, 350, carA);
 
     for (let i=1; i<this.car.list.length;i++){
         //car.list[i].setFrame(3);
     }
 
-    this.keys = this.input.keyboard.addKeys("P");
+    this.keys = this.input.keyboard.addKeys("W,A,S,D");
 
 };
 gameScene.update = function (box) {
-    if (this.keys.P.isDown) {
+    if (this.keys.W.isDown) {
         //console.log ('here');
         this.car.y -= 5;
+    }
+    if (this.keys.S.isDown) {
+        //console.log ('here');
+        this.car.y += 5;
+    }
+    if (this.keys.A.isDown) {
+        //console.log ('here');
+        this.car.angle -= 2;
+    }
+    if (this.keys.D.isDown) {
+        //console.log ('here');
+        this.car.angle += 2;
     }
 }
 
