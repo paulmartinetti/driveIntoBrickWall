@@ -7,6 +7,13 @@ let config = {
   type: Phaser.AUTO,
   width: 1200,
   height: 1200,
+  physics: {
+    default: 'arcade',
+    arcade: {
+        fps: 60,
+        gravity: { y: 0 }
+    }
+  },
   scene: [bootScene, loadingScene, homeScene, gameScene],
   title: 'driveIntoBrickWall',
   pixelArt: false,

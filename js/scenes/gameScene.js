@@ -18,6 +18,9 @@ gameScene.init = function () {
     /*
     *   
     */
+    this.cursors;
+    //this.pcar;
+    
 
 };
 
@@ -59,42 +62,66 @@ gameScene.create = function () {
     }
 
 
-    let cockpit = this.add.sprite(-75, -25, 'cockpit').setOrigin(0, 0);
-    let head = this.add.sprite(-25, 25, 'head').setOrigin(0, 0);
+    let cockpit = this.add.sprite(-75, -50, 'cockpit').setOrigin(0, 0);
+    let head = this.add.sprite(0, 50, 'head');
     // --> add head animation
     carA.push(cockpit,head);
     
     // assemble car
     this.car = this.add.container(350, 350, carA);
 
-    for (let i=1; i<this.car.list.length;i++){
-        //car.list[i].setFrame(3);
-    }
+    this.physics.world.enable(this.car);
+    this.car.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
 
-    this.keys = this.input.keyboard.addKeys("W,A,S,D");
+    //this.car.body.setDamping(true);
+    //this.car.body.setDrag(0.99);
+    //this.car.body.setMaxVelocity(200);
+
+    //this.cursors = this.input.keyboard.createCursorKeys();
+
+    //for (let i=1; i<this.car.list.length;i++){
+        //car.list[i].setFrame(3);
+    //}
+
+    //this.keys = this.input.keyboard.addKeys("W,A,S,D");
+
+
 
 };
 gameScene.update = function (box) {
-    if (this.keys.W.isDown) {
-        //console.log ('here');
-        this.car.y -= 5;
+    if (this.car.body.velocity.x < 0)
+    {
+        this.car.rotation -= 0.02;
     }
-    if (this.keys.S.isDown) {
-        //console.log ('here');
-        this.car.y += 5;
+    else
+    {
+        this.car.rotation += 0.02;
     }
-    if (this.keys.A.isDown) {
-        //console.log ('here');
-        this.car.angle -= 2;
+    /* if (this.cursors.up.isDown)
+    {
+        this.physics.velocityFromRotation(this.car.rotation, 200, this.car.body.acceleration);
     }
-    if (this.keys.D.isDown) {
-        //console.log ('here');
-        this.car.angle += 2;
+    else
+    {
+        this.car.setAcceleration(0);
     }
+
+    if (this.cursors.left.isDown)
+    {
+        this.car.setAngularVelocity(-300);
+    }
+    else if (this.cursors.right.isDown)
+    {
+        this.car.setAngularVelocity(300);
+    }
+    else
+    {
+        this.car.setAngularVelocity(0);
+    } */
 }
 
 // animate out
-gameScene.depart = function (box, newTime) {
+/* gameScene.depart = function (box, newTime) {
     let depart = this.tweens.add({
         targets: box,
         duration: 1500,
@@ -121,6 +148,6 @@ gameScene.rentre = function (box) {
         paused: false,
         callbackScope: this
     }, this);
-}
+} */
 
 /******************* no code below here, doesn't run */
