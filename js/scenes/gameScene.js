@@ -19,6 +19,7 @@ gameScene.init = function () {
     *   
     */
     this.cursors;
+    this.v=1;
     //this.pcar;
     
 
@@ -71,13 +72,16 @@ gameScene.create = function () {
     this.car = this.add.container(350, 350, carA);
 
     this.physics.world.enable(this.car);
-    this.car.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
+    this.car.setSize(250,300);
+    console.log(this.car.body);
+
+    this.car.body.setBounce(1, 1).setCollideWorldBounds(true);
 
     //this.car.body.setDamping(true);
-    //this.car.body.setDrag(0.99);
+    this.car.body.setDrag(0.99);
     //this.car.body.setMaxVelocity(200);
 
-    //this.cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     //for (let i=1; i<this.car.list.length;i++){
         //car.list[i].setFrame(3);
@@ -89,34 +93,30 @@ gameScene.create = function () {
 
 };
 gameScene.update = function (box) {
-    if (this.car.body.velocity.x < 0)
-    {
-        this.car.rotation -= 0.02;
+    if (this.cursors.up.isDown){
+       this.physics.velocityFromRotation(this.car.rotation, 60, this.car.body.acceleration);
+        //this.v--;
+       //this.car.body.setVelocity(0,this.v);
+       
+    } else{
+        //
     }
-    else
-    {
-        this.car.rotation += 0.02;
-    }
-    /* if (this.cursors.up.isDown)
-    {
-        this.physics.velocityFromRotation(this.car.rotation, 200, this.car.body.acceleration);
-    }
-    else
-    {
-        this.car.setAcceleration(0);
-    }
-
+    // turning
     if (this.cursors.left.isDown)
     {
-        this.car.setAngularVelocity(-300);
+        this.car.body.setAngularVelocity(-60);
     }
     else if (this.cursors.right.isDown)
     {
-        this.car.setAngularVelocity(300);
+        this.car.body.setAngularVelocity(60);
     }
     else
     {
-        this.car.setAngularVelocity(0);
+        this.car.body.setAngularDrag(60);
+    }
+
+    /* if (this.cursors.down.isDown){
+        this.car.body.setAcceleration(-10);
     } */
 }
 
