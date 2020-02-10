@@ -38,19 +38,20 @@ gameScene.create = function () {
     // build car
     let carA = [];
     // depth 1
-    let flw = this.add.sprite(-25,50,'lw').setOrigin(0,0);
-    let frw = this.add.sprite(200,50,'rw').setOrigin(0,0);
-    let blw = this.add.sprite(-25,200,'lw').setOrigin(0,0);
-    let brw = this.add.sprite(200,200,'rw').setOrigin(0,0);
+    let flw = this.add.sprite(-150,-100,'lw').setOrigin(0,0);
+    let frw = this.add.sprite(75,-100,'rw').setOrigin(0,0);
+    let blw = this.add.sprite(-150,50,'lw').setOrigin(0,0);
+    let brw = this.add.sprite(75,50,'rw').setOrigin(0,0);
     // --> animate wheels
     carA.push(flw,frw,blw,brw);
 
     // set up car parts in 5x6 grid
     let step = 50;
     for (let i=0;i<this.carDA.length;i++){
+
         for (let j=0;j<this.carDA[i].length;j++){
             let t = this.carDA[i][j];
-            let part = this.add.sprite(j*step,i*step,t).setOrigin(0,0).setInteractive().setDepth(5);
+            let part = this.add.sprite(((j*step)-125),((i*step)-150),t).setOrigin(0,0).setInteractive().setDepth(5);
             // --> add collision listener
             carA.push(part);
         }
@@ -58,8 +59,8 @@ gameScene.create = function () {
     }
 
 
-    let cockpit = this.add.sprite(50, 150, 'cockpit').setOrigin(0, 0);
-    let head = this.add.sprite(100, 200, 'head').setOrigin(0, 0);
+    let cockpit = this.add.sprite(-75, -25, 'cockpit').setOrigin(0, 0);
+    let head = this.add.sprite(-25, 25, 'head').setOrigin(0, 0);
     // --> add head animation
     carA.push(cockpit,head);
     
